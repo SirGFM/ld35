@@ -6,8 +6,6 @@
 #ifndef __GAME_CONST_H__
 #define __GAME_CONST_H__
 
-#include <GFraMe/core/gfmAudio_bkend.h>
-
 /* TODO Set attributes for the game */
 
 /* == Game's basic configurations =========================================== */
@@ -59,6 +57,15 @@
 #define CONF_HEIGHT 480
 #define CONF_FPS    60
 #define CONF_AUDIOQ gfmAudio_defQuality
+
+/* == ... =================================================================== */
+
+/** Texture's transparent color */
+#define KEY_COLOR       0xFF00FF
+/** Maximum number of times the quadtree will subdivide */
+#define QT_MAX_DEPTH    6
+/** Number of nodes required for the quadtree to subdivide */
+#define QT_MAX_NODES    10
 
 #endif /* __GAME_CONST_H__ */
 

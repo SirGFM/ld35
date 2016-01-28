@@ -51,6 +51,9 @@ gfmRV main_loop() {
             rv = input_updateButtons();
             ASSERT(rv == GFMRV_OK, rv);
 
+            rv = gfm_getElapsedTime(&(pGame->elapsed), pGame->pCtx);
+            ASSERT(rv == GFMRV_OK, rv);
+
             /* TODO Update the current state */
 
             rv = gfm_fpsCounterUpdateEnd(pGame->pCtx);
@@ -62,6 +65,13 @@ gfmRV main_loop() {
             ASSERT(rv == GFMRV_OK, rv);
 
             /* TODO Render the current state */
+
+#if defined(DEBUG)
+            if (pGame->flags & DBG_RENDERQT) {
+                rv = gfmQuadtree_drawBounds(pGlobal->pQt, pGame->pCtx, 0);
+                ASSERT(rv == GFMRV_OK, rv);
+            }
+#endif
 
             rv = gfm_drawEnd(pGame->pCtx);
             ASSERT(rv == GFMRV_OK, rv);
@@ -127,7 +137,7 @@ int main(int argc, char *argv[]) {
     if (pConfig->flags & CFG_FULLSCREEN) {
         /* Initialize the game window in fullscreen mode */
         rv = gfm_initGameFullScreen(pGame->pCtx, V_WIDTH, V_HEIGHT,
-                pConfig->curResolution, CAN_RESIZE, pConfig->flags & CFG_VSYNC);
+                pConfig->resolution, CAN_RESIZE, pConfig->flags & CFG_VSYNC);
     }
     else {
         /* Initialize the game window in windowed mode */

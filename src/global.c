@@ -6,6 +6,10 @@
 #include <base/game_ctx.h>
 #include <base/global.h>
 
+#include <GFraMe/gfmAssert.h>
+#include <GFraMe/gfmError.h>
+#include <GFraMe/gfmQuadtree.h>
+
 /** Store data related to game */
 gameCtx *pGame = 0;
 
@@ -40,7 +44,7 @@ void global_init(void *pMem) {
     pGlobal = (globalCtx*)OFFSET_MEM(pMem, GLOBAL_OFFSET);
 
     /* Set any pointers within those structs that were already alloc'ed */
-    pConfig->pLast = (lastConfigCtx*)OFFSET_MEM(pMem, LASTCONFIG_OFFSET);
+    pConfig->pLast = (configCtx*)OFFSET_MEM(pMem, LASTCONFIG_OFFSET);
 }
 
 /**
@@ -49,13 +53,26 @@ void global_init(void *pMem) {
  * @return GFraMe return value
  */
 gfmRV global_initUserVar() {
-    /* Initialize everything */
-    return GFMRV_OK;
+    /** GFraMe return value */
+    gfmRV rv;
+
+    /* Initialize the quadtree, so it can be later used for collision */
+    rv = gfmQuadtree_getNew(&(pGlobal->pQt));
+    ASSERT(rv == GFMRV_OK, rv);
+
+    /* TODO Initialize everything */
+
+    rv = GFMRV_OK;
+__ret:
+    return rv;
 }
 
 /**
  * Release all variables in pGlobal
  */
 void global_freeUserVar() {
+    if (pGlobal->pQt) {
+        gfmQuadtree_free(&(pGlobal->pQt));
+    }
 }
 

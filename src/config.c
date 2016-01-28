@@ -22,7 +22,7 @@ static gfmRV config_saveCur(gfmSave *pSave) {
 
     rv = gfmSave_writeStatic(pSave, CONF_ID_FLAGS, pConfig->flags);
     ASSERT(rv == GFMRV_OK, rv);
-    rv = gfmSave_writeStatic(pSave, CONF_ID_RES, pConfig->curResolution);
+    rv = gfmSave_writeStatic(pSave, CONF_ID_RES, pConfig->resolution);
     ASSERT(rv == GFMRV_OK, rv);
     rv = gfmSave_writeStatic(pSave, CONF_ID_WIDTH, pConfig->width);
     ASSERT(rv == GFMRV_OK, rv);
@@ -110,7 +110,7 @@ static gfmRV config_doLoad(gfmSave *pSave) {
     /* Load all configurations from the file */
     rv = gfmSave_readStatic((int*)&(pConfig->flags), pSave, CONF_ID_FLAGS);
     ASSERT(rv == GFMRV_OK, rv);
-    rv = gfmSave_readStatic(&(pConfig->curResolution), pSave, CONF_ID_RES);
+    rv = gfmSave_readStatic(&(pConfig->resolution), pSave, CONF_ID_RES);
     ASSERT(rv == GFMRV_OK, rv);
     rv = gfmSave_readStatic(&(pConfig->width), pSave, CONF_ID_WIDTH);
     ASSERT(rv == GFMRV_OK, rv);
@@ -182,7 +182,7 @@ gfmRV config_load() {
      * configurations */
     if (pConfig->flags & CFG_CONF_ERR) {
         pConfig->flags = pConfig->pLast->flags;
-        pConfig->curResolution = pConfig->pLast->resolution;
+        pConfig->resolution = pConfig->pLast->resolution;
         pConfig->width = pConfig->pLast->width;
         pConfig->height = pConfig->pLast->height;
         pConfig->fps = pConfig->pLast->fps;
@@ -207,7 +207,7 @@ void config_loadDefault() {
     /* Simply load it */
     pConfig->flags = CONF_FLAGS;
     pConfig->pLast->flags = CONF_FLAGS;
-    pConfig->curResolution = CONF_RES;
+    pConfig->resolution = CONF_RES;
     pConfig->pLast->resolution = CONF_RES;
     pConfig->width = CONF_WIDTH;
     pConfig->audioQuality = CONF_AUDIOQ;
@@ -264,7 +264,7 @@ gfmRV config_saveCurAsValid() {
 
     /* Copy the current configuration to the valids ones */
     pConfig->pLast->flags = pConfig->flags;
-    pConfig->pLast->resolution = pConfig->curResolution;
+    pConfig->pLast->resolution = pConfig->resolution;
     pConfig->pLast->width = pConfig->width;
     pConfig->pLast->height = pConfig->height;
     pConfig->pLast->fps = pConfig->fps;
