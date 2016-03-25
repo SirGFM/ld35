@@ -31,3 +31,17 @@ bin/*
 
 # Debug files
 *.dSYM/
+
+# Asset files
+*.xcf
+*.ase
+*.wav
+*.gif
+
+# Log files
+*.log
+
+# Temp files
+*.swp
+*~
+

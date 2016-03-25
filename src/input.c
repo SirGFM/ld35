@@ -43,20 +43,27 @@ gfmRV input_updateButtons() {
         if (pConfig->flags & CFG_FULLSCREEN) {
             rv = gfm_setWindowed(pGame->pCtx);
             ASSERT(rv == GFMRV_OK, rv);
-            pConfig->flags ^= CFG_FULLSCREEN;
         }
         else {
             rv = gfm_setFullscreen(pGame->pCtx);
             ASSERT(rv == GFMRV_OK, rv);
-            pConfig->flags |= CFG_FULLSCREEN;
         }
+        pConfig->flags ^= CFG_FULLSCREEN;
         /* TODO Save the new state of the game's window */
     }
 #if defined(DEBUG)
-    /* Switch whether rendering the quadtree is enabled */
+    /* Switch quadtree visibility */
     if ((pButton->qt.state & gfmInput_justReleased) == gfmInput_justReleased) {
-        pGame->flags ^= DBG_RENDERQT;
+        if (pGame->flags & DBG_RENDERQT) {
+            pGame->flags &= ~DBG_RENDERQT;
+        }
+        else {
+            pGame->flags |= DBG_RENDERQT;
+        }
     }
+    /* Update the 'manual stepper' */
+    rv = input_updateDebugButtons();
+    ASSERT(rv == GFMRV_OK, rv);
 #endif
 
     /* TODO Add actions that should be triggered as soon as key are pressed */
@@ -65,6 +72,47 @@ gfmRV input_updateButtons() {
 __ret:
     return rv;
 }
+
+#if defined(DEBUG)
+/**
+ * Update only the debug buttons
+ *
+ * @return GFraMe return value
+ */
+gfmRV input_updateDebugButtons() {
+    /** Return value */
+    gfmRV rv;
+
+    /* Retrieve the keys state */
+    rv = gfm_getKeyState(&(pButton->dbgPause.state),
+            &(pButton->dbgPause.numPressed), pGame->pCtx,
+            pButton->dbgPause.handle);
+    ASSERT(rv == GFMRV_OK, rv);
+    rv = gfm_getKeyState(&(pButton->dbgStep.state),
+            &(pButton->dbgStep.numPressed), pGame->pCtx,
+            pButton->dbgStep.handle);
+    ASSERT(rv == GFMRV_OK, rv);
+
+    /* Check if the game was (un)paused */
+    if ((pButton->dbgPause.state & gfmInput_justReleased) == gfmInput_justReleased) {
+        if (pGame->flags & GAME_RUN) {
+            pGame->flags &= ~GAME_RUN;
+        }
+        else {
+            pGame->flags |= GAME_RUN;
+        }
+    }
+    /* Check if a new frame should be issued */
+    if ((pButton->dbgStep.state & gfmInput_justReleased) == gfmInput_justReleased) {
+        pGame->flags |= GAME_STEP;
+        pGame->flags &= ~GAME_RUN;
+    }
+
+    rv = GFMRV_OK;
+__ret:
+    return rv;
+}
+#endif
 
 /**
  * Initialize and bind all buttons
@@ -83,6 +131,8 @@ gfmRV input_init() {
     ADD_KEY(fullscreen);
 #if defined(DEBUG)
     ADD_KEY(qt);
+    ADD_KEY(dbgPause);
+    ADD_KEY(dbgStep);
 #endif
     /* TODO Add other keys */
 
@@ -99,6 +149,8 @@ gfmRV input_init() {
     BIND_KEY(fullscreen, gfmKey_f12);
 #if defined(DEBUG)
     BIND_KEY(qt, gfmKey_f11);
+    BIND_KEY(dbgPause, gfmKey_f5);
+    BIND_KEY(dbgStep, gfmKey_f6);
 #endif
     /* TODO Bind other keys */
 

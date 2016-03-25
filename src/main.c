@@ -3,16 +3,16 @@
  *
  * Game entry point. Also manages update, rendering and switching states
  */
-#include <GFraMe/gfmAssert.h>
-#include <GFraMe/gfmError.h>
-#include <GFraMe/gframe.h>
-
 #include <base/assets.h>
 #include <base/config.h>
 #include <base/game_const.h>
 #include <base/game_ctx.h>
 #include <base/global.h>
 #include <base/input.h>
+
+#include <GFraMe/gfmAssert.h>
+#include <GFraMe/gfmError.h>
+#include <GFraMe/gframe.h>
 
 /** Required by malloc() and free() */
 #include <stdlib.h>
@@ -37,14 +37,42 @@ gfmRV main_loop() {
             }
 
             pGame->curState = pGame->nextState;
-            pGame->nextState = 0;
+            pGame->nextState = ST_NONE;
         }
 
         /* Wait for an event */
         rv = gfm_handleEvents(pGame->pCtx);
         ASSERT(rv == GFMRV_OK, rv);
 
+#if defined(DEBUG)
+        /* If the game is paused in debug mode, update buttons that controls
+         * in-game debugging */
+        if (!(pGame->flags & GAME_RUN)) {
+            gfmInput *pInput;
+
+            /* Update (within the framework) only debugging related buttons */
+            pInput = 0;
+            rv = gfm_getInput(&pInput, pGame->pCtx);
+            ASSERT(rv == GFMRV_OK, rv);
+            rv = gfmInput_updateVKey(pInput, pButton->dbgStep.handle);
+            ASSERT(rv == GFMRV_OK, rv);
+            rv = gfmInput_updateVKey(pInput, pButton->dbgPause.handle);
+            ASSERT(rv == GFMRV_OK, rv);
+
+            /* Update the debug state */
+            rv = input_updateDebugButtons();
+            ASSERT(rv == GFMRV_OK, rv);
+        }
+#endif
+
+#if defined(DEBUG)
+        /* Only on the debug build, only call gfm_isUpdating if the frame should
+         * be updated */
+        while (((pGame->flags & GAME_RUN) || (pGame->flags & GAME_STEP)) &&
+            gfm_isUpdating(pGame->pCtx) == GFMRV_TRUE) {
+#else
         while (gfm_isUpdating(pGame->pCtx) == GFMRV_TRUE) {
+#endif
             rv = gfm_fpsCounterUpdateBegin(pGame->pCtx);
             ASSERT(rv == GFMRV_OK, rv);
 
@@ -55,9 +83,16 @@ gfmRV main_loop() {
             ASSERT(rv == GFMRV_OK, rv);
 
             /* TODO Update the current state */
+            switch (pGame->curState) {
+                default: ASSERT(0, GFMRV_INTERNAL_ERROR);
+            }
+            ASSERT(rv == GFMRV_OK, rv);
 
             rv = gfm_fpsCounterUpdateEnd(pGame->pCtx);
             ASSERT(rv == GFMRV_OK, rv);
+
+            /* If stepping, force the game to wait for a new input */
+            pGame->flags &= ~GAME_STEP;
         }
 
         while (gfm_isDrawing(pGame->pCtx) == GFMRV_TRUE) {
@@ -65,9 +100,13 @@ gfmRV main_loop() {
             ASSERT(rv == GFMRV_OK, rv);
 
             /* TODO Render the current state */
+            switch (pGame->curState) {
+                default: ASSERT(0, GFMRV_INTERNAL_ERROR);
+            }
+            ASSERT(rv == GFMRV_OK, rv);
 
 #if defined(DEBUG)
-            if (pGame->flags & DBG_RENDERQT) {
+            if ((pGame->flags & DBG_RENDERQT) && pGlobal->pQt) {
                 rv = gfmQuadtree_drawBounds(pGlobal->pQt, pGame->pCtx, 0);
                 ASSERT(rv == GFMRV_OK, rv);
             }
@@ -77,13 +116,13 @@ gfmRV main_loop() {
             ASSERT(rv == GFMRV_OK, rv);
         }
 
-        if (pGame->nextState != 0) {
+        if (pGame->nextState != ST_NONE) {
             /* TODO Clear the current state, if switching */
             switch (pGame->curState) {
                 default: ASSERT(0, GFMRV_INTERNAL_ERROR);
             }
 
-            pGame->curState = 0;
+            pGame->curState = ST_NONE;
         }
     }
 
@@ -119,6 +158,8 @@ int main(int argc, char *argv[]) {
     ASSERT(rv == GFMRV_OK, rv);
     rv = gfm_initStatic(pGame->pCtx, ORG, TITLE);
     ASSERT(rv == GFMRV_OK, rv);
+
+    /* TODO Parse argv */
 
     /* Load the configurations */
     rv = config_load();
@@ -184,6 +225,13 @@ int main(int argc, char *argv[]) {
     ASSERT(rv == GFMRV_OK, rv);
     rv = gfm_setStateFrameRate(pGame->pCtx, pConfig->fps, pConfig->fps);
     ASSERT(rv == GFMRV_OK, rv);
+
+    /* Set the initial state */
+    pGame->nextState = ST_NONE;
+#if defined(DEBUG)
+    /* Set debug mode to running instead of stepping */
+    pGame->flags |= GAME_RUN;
+#endif
 
     /* Initialize the main loop */
     rv = main_loop();

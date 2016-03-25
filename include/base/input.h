@@ -16,6 +16,15 @@
  */
 gfmRV input_updateButtons();
 
+#if defined(DEBUG)
+/**
+ * Update only the debug buttons
+ *
+ * @return GFraMe return value
+ */
+gfmRV input_updateDebugButtons();
+#endif
+
 /**
  * Initialize and bind all buttons
  *

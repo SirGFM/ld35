@@ -6,6 +6,8 @@
 #ifndef __GAME_CTX_H__
 #define __GAME_CTX_H__
 
+#include <base/state.h>
+
 #include <GFraMe/gframe.h>
 #include <GFraMe/gfmInput.h>
 #include <GFraMe/gfmQuadtree.h>
@@ -89,6 +91,8 @@ enum enGameFlags {
     GAME_SKIP_2    = 0x00002000,
     /** Overrides 'GAME_STEP' and force the game loop to run normally */
     GAME_RUN       = 0x00020000,
+    /** Pauses the game and bring up the pause menu */
+    GAME_PAUSE     = 0x00200000,
     /** Renders the quadtree */
     DBG_RENDERQT   = 0x00000004
 };
@@ -102,10 +106,10 @@ struct stGameCtx {
      * 'enum enGameFlags' documentation */
     gameFlags flags;
     /** Currently running state (e.g., ST_PLAYSTATE) */
-    int curState;
+    state curState;
     /** If different from 'ST_NONE', the state to which the game must switch on
      * the end of this frame */
-    int nextState;
+    state nextState;
     /** Time elapsed since the previous frame, in miliseconds */
     int elapsed;
 };
@@ -140,8 +144,12 @@ struct stButtonCtx {
     /** Button to switch between fullscreen and windowed mode */
     button fullscreen;
 #if defined(DEBUG)
-    /** Add button to switch rendering of the quadtree */
+    /** Enable/disable rendering of the quadtree */
     button qt;
+    /** Pause/Unpause updating the game */
+    button dbgPause;
+    /** Update a single frame and pause */
+    button dbgStep;
 #endif
     /* TODO Add buttons */
 };
