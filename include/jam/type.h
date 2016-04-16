@@ -26,14 +26,14 @@ enum enType {
     T_PART   = gfmType_reserved_5,
     /* Base type for collideables that doesn't hurt nor move (e.g., floor) */
     T_FLOOR  = gfmType_reserved_4,
-    /* Base type for hitbox objects (i.e., bullets, slashes, etc) */
-    T_HITBOX = gfmType_reserved_7,
-    T_SLASH  = (1 << T_NBITS) | T_HITBOX,
     /* Base type for players and enemies */
     T_MOB    = gfmType_reserved_6,
     /* Base type for both players */
     T_PRINCE = (1 << T_NBITS) | T_MOB,
     T_MINION = (2 << T_NBITS) | T_MOB,
+    /* Base type for hitbox objects (i.e., bullets, slashes, etc) */
+    T_HITBOX = gfmType_reserved_7,
+    T_SLASH  = (1 << T_NBITS) | T_HITBOX,
 };
 typedef enum enType mjType;
 

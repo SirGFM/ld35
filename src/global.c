@@ -4,12 +4,15 @@
  * Declare all global variables
  */
 #include <base/game_ctx.h>
+#include <base/game_const.h>
 #include <base/global.h>
 
 #include <GFraMe/gfmAssert.h>
 #include <GFraMe/gfmError.h>
 #include <GFraMe/gfmSprite.h>
 #include <GFraMe/gfmQuadtree.h>
+
+#include <jam/group_helper.h>
 
 /** Store data related to game */
 gameCtx *pGame = 0;
@@ -63,6 +66,15 @@ gfmRV global_initUserVar() {
 
     rv = gfmGroup_getNew(&(pGlobal->pFloor));
     ASSERT(rv == GFMRV_OK, rv);
+    rv = gh_initInf(pGlobal->pFloor, PRT_FLOOR_MAX, 0/*dieOff*/);
+    ASSERT(rv == GFMRV_OK, rv);
+    rv = gfmGroup_setCollisionQuality(pGlobal->pFloor,
+            gfmCollisionQuality_collideEverything);
+    ASSERT(rv == GFMRV_OK, rv);
+    rv = gfmGroup_getNew(&(pGlobal->pHitbox));
+    ASSERT(rv == GFMRV_OK, rv);
+    rv = gh_init(pGlobal->pHitbox, PRT_HITBOX_MAX, HITBOX_MAX_TIME, 1/*dieOff*/);
+    ASSERT(rv == GFMRV_OK, rv);
     rv = gfmSprite_getNew(&(pGlobal->pPlayer));
     ASSERT(rv == GFMRV_OK, rv);
     /* TODO Initialize everything */
@@ -77,6 +89,7 @@ __ret:
  */
 void global_freeUserVar() {
     gfmGroup_free(&(pGlobal->pFloor));
+    gfmGroup_free(&(pGlobal->pHitbox));
     gfmSprite_free(&(pGlobal->pPlayer));
     gfmQuadtree_free(&(pGlobal->pQt));
 }

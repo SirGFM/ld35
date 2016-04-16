@@ -191,6 +191,7 @@ struct stGlobalCtx {
     gfmQuadtreeRoot *pQt;
     gfmSprite *pPlayer;
     gfmGroup *pFloor;
+    gfmGroup *pHitbox;
     /* TODO Add any other globally accessible variable (e.g., a tilemap) */
 };
 

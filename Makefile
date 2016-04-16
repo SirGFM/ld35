@@ -2,14 +2,15 @@
 #=======================================================================
 # Define every object required by compilation
 #=======================================================================
-  OBJS =                        \
-          $(OBJDIR)/assets.o    \
-          $(OBJDIR)/collision.o \
-          $(OBJDIR)/config.o    \
-          $(OBJDIR)/global.o    \
-          $(OBJDIR)/input.o     \
-          $(OBJDIR)/intro.o     \
-          $(OBJDIR)/main.o      \
+  OBJS =                           \
+          $(OBJDIR)/assets.o       \
+          $(OBJDIR)/collision.o    \
+          $(OBJDIR)/config.o       \
+          $(OBJDIR)/global.o       \
+          $(OBJDIR)/group_helper.o \
+          $(OBJDIR)/input.o        \
+          $(OBJDIR)/intro.o        \
+          $(OBJDIR)/main.o         \
           $(OBJDIR)/prince.o
 #=======================================================================
 

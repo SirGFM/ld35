@@ -13,6 +13,8 @@
 #include <GFraMe/gfmSprite.h>
 #include <GFraMe/gfmTypes.h>
 
+#include <jam/type.h>
+
 #if defined(DEBUG) && !(defined(__WIN32) || defined(__WIN32__))
 #include <stdlib.h>
 #  include <signal.h>
@@ -69,10 +71,9 @@ gfmRV collision_run() {
         /** gfmObjects children (if any) */
         void *pChild1, *pChild2;
         int type1, type2;
-#if 0
         /** Objects' types OR'd together */
         int orType;
-#endif /* 0 */
+        int isFirstCase;
 
         /* Retrieve the two overlaping objects and their types */
         rv = gfmQuadtree_getOverlaping(&pObj1, &pObj2, pGlobal->pQt);
@@ -82,24 +83,38 @@ gfmRV collision_run() {
         rv = collision_getSubtype(&pChild2, &type2, pObj2);
         ASSERT(rv == GFMRV_OK, rv);
 
-#if 0
         /* If types have at most 16 bits, one could easily OR them together to
          * use a nice case to filter collision/handle */
         orType = type1 | (type2 << 16);
+        isFirstCase = 0;
 
         /* Handle the collision */
         rv = GFMRV_OK;
+#define CASE(type1, type2) \
+  case ((type1) | (type2 << 16)): \
+    isFirstCase = 1; \
+  case ((type2) | (type1 << 16)):
+#define IGNORESIMPLE(type) \
+  case ((type) | (type << 16)):
+#define IGNORE(type1, type2) \
+  case ((type1) | (type2 << 16)): \
+  case ((type2) | (type1 << 16)):
         switch (orType) {
-            /* e.g.: Handle collision between A and B the same as A and C */
-            case TYPE_A | (TYPE_B << 16):
-            case TYPE_A | (TYPE_C << 16): {
-                /* Handle it here */
-                rv = handleFunction((typeA*)pChild1, pObj2);
+            CASE(T_SLASH, T_MINION) {
+                if (isFirstCase) {
+                    /* Slash is obj1 */
+                }
+                else {
+                    /* Slash is obj2 */
+                }
+
+                /* TODO Implement collision between slash and minion */
             } break;
-            case TYPE_B | (TYPE_A << 16):
-            case TYPE_C | (TYPE_A << 16): {
-                /* Handle it here */
-                rv = handleFunction((typeA*)pChild2, pObj1);
+            IGNORESIMPLE(T_SLASH)
+            IGNORE(T_PRINCE, T_SLASH)
+            IGNORE(T_FLOOR, T_SLASH)
+            IGNORE(T_FLOOR, T_PRINCE) {
+                /* Ignore collision */
             } break;
             /* On Linux, a SIGINT is raised any time a unhandled collision
              * happens. When debugging, GDB will stop here and allow the user to
@@ -113,7 +128,6 @@ gfmRV collision_run() {
             }
         } /* switch (orType) */
         ASSERT(rv == GFMRV_OK, rv);
-#endif
 
         /** Update the quadtree (so any other collision is detected) */
         rv = gfmQuadtree_continue(pGlobal->pQt);

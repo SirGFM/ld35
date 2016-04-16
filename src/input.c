@@ -183,7 +183,7 @@ gfmRV input_init() {
 
     BIND_KEY(act, gfmKey_x);
     BIND_KEY(act, gfmKey_j);
-    BIND_KEY(act, gfmKey_lctrl);
+    BIND_KEY(act, gfmKey_space);
 
     BIND_KEY(pause, gfmKey_esc);
     BIND_KEY(pause, gfmKey_p);

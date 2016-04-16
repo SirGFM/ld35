@@ -71,7 +71,22 @@
 /* == ... =================================================================== */
 
 #define PRT_FLOOR_Y         (V_HEIGHT - 32)
+#define PRT_FLOOR_MAX       8
 #define PRT_PRINCE_FRAME    (65)
+#define PRT_HITBOX_MAX      100
+
+#define PRINCE_VX           200
+#define PRINCE_SLASH_ROFFX  8
+#define PRINCE_SLASH_LOFFX  -8
+#define PRINCE_SLASH_OFFY   0
+
+#define SLASH_W             8
+#define SLASH_H             8
+#define SLASH_SSET          pGfx->pSset8x8
+#define SLASH_OFFX          0
+#define SLASH_OFFY          0
+
+#define HITBOX_MAX_TIME     300
 
 #endif /* __GAME_CONST_H__ */
 
