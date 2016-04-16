@@ -8,6 +8,7 @@
 
 #include <GFraMe/gfmAssert.h>
 #include <GFraMe/gfmError.h>
+#include <GFraMe/gfmSprite.h>
 #include <GFraMe/gfmQuadtree.h>
 
 /** Store data related to game */
@@ -60,6 +61,10 @@ gfmRV global_initUserVar() {
     rv = gfmQuadtree_getNew(&(pGlobal->pQt));
     ASSERT(rv == GFMRV_OK, rv);
 
+    rv = gfmGroup_getNew(&(pGlobal->pFloor));
+    ASSERT(rv == GFMRV_OK, rv);
+    rv = gfmSprite_getNew(&(pGlobal->pPlayer));
+    ASSERT(rv == GFMRV_OK, rv);
     /* TODO Initialize everything */
 
     rv = GFMRV_OK;
@@ -71,8 +76,8 @@ __ret:
  * Release all variables in pGlobal
  */
 void global_freeUserVar() {
-    if (pGlobal->pQt) {
-        gfmQuadtree_free(&(pGlobal->pQt));
-    }
+    gfmGroup_free(&(pGlobal->pFloor));
+    gfmSprite_free(&(pGlobal->pPlayer));
+    gfmQuadtree_free(&(pGlobal->pQt));
 }
 

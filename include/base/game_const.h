@@ -66,6 +66,12 @@
 #define QT_MAX_DEPTH    6
 /** Number of nodes required for the quadtree to subdivide */
 #define QT_MAX_NODES    10
+#define TEXATLAS        "atlas.bmp"
+
+/* == ... =================================================================== */
+
+#define PRT_FLOOR_Y         (V_HEIGHT - 32)
+#define PRT_PRINCE_FRAME    (65)
 
 #endif /* __GAME_CONST_H__ */
 

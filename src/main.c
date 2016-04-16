@@ -10,6 +10,8 @@
 #include <base/global.h>
 #include <base/input.h>
 
+#include <jam/intro.h>
+
 #include <GFraMe/gfmAssert.h>
 #include <GFraMe/gfmError.h>
 #include <GFraMe/gframe.h>
@@ -33,8 +35,10 @@ gfmRV main_loop() {
         if (pGame->nextState != 0) {
             /* TODO Init the current state, if switching */
             switch (pGame->nextState) {
+                case ST_INTRO: rv = intro_init(); break;
                 default: ASSERT(0, GFMRV_INTERNAL_ERROR);
             }
+            ASSERT(rv == GFMRV_OK, rv);
 
             pGame->curState = pGame->nextState;
             pGame->nextState = ST_NONE;
@@ -84,6 +88,7 @@ gfmRV main_loop() {
 
             /* TODO Update the current state */
             switch (pGame->curState) {
+                case ST_INTRO: rv = intro_update(); break;
                 default: ASSERT(0, GFMRV_INTERNAL_ERROR);
             }
             ASSERT(rv == GFMRV_OK, rv);
@@ -101,6 +106,7 @@ gfmRV main_loop() {
 
             /* TODO Render the current state */
             switch (pGame->curState) {
+                case ST_INTRO: rv = intro_draw(); break;
                 default: ASSERT(0, GFMRV_INTERNAL_ERROR);
             }
             ASSERT(rv == GFMRV_OK, rv);
@@ -117,10 +123,13 @@ gfmRV main_loop() {
         }
 
         if (pGame->nextState != ST_NONE) {
+#if 0
             /* TODO Clear the current state, if switching */
             switch (pGame->curState) {
                 default: ASSERT(0, GFMRV_INTERNAL_ERROR);
             }
+            ASSERT(rv == GFMRV_OK, rv);
+#endif /* Ignore cleaning each state */
 
             pGame->curState = ST_NONE;
         }
@@ -227,7 +236,7 @@ int main(int argc, char *argv[]) {
     ASSERT(rv == GFMRV_OK, rv);
 
     /* Set the initial state */
-    pGame->nextState = ST_NONE;
+    pGame->nextState = ST_INTRO;
 #if defined(DEBUG)
     /* Set debug mode to running instead of stepping */
     pGame->flags |= GAME_RUN;
