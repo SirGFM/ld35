@@ -68,6 +68,17 @@ gfmRV input_updateButtons() {
 
     /* TODO Add actions that should be triggered as soon as key are pressed */
 
+    /* Switch to/from pause state */
+    if ((pButton->pause.state & gfmInput_justReleased) == gfmInput_justReleased) {
+        if (pGame->curState != ST_PAUSE) {
+            pGame->pushedState = pGame->curState;
+            pGame->curState = ST_PAUSE;
+        }
+        else {
+            pGame->curState = pGame->pushedState;
+        }
+    }
+
     rv = GFMRV_OK;
 __ret:
     return rv;
@@ -134,7 +145,12 @@ gfmRV input_init() {
     ADD_KEY(dbgPause);
     ADD_KEY(dbgStep);
 #endif
-    /* TODO Add other keys */
+    ADD_KEY(left);
+    ADD_KEY(right);
+    ADD_KEY(up);
+    ADD_KEY(down);
+    ADD_KEY(act);
+    ADD_KEY(pause);
 
 #undef ADD_KEY
 
@@ -152,7 +168,25 @@ gfmRV input_init() {
     BIND_KEY(dbgPause, gfmKey_f5);
     BIND_KEY(dbgStep, gfmKey_f6);
 #endif
-    /* TODO Bind other keys */
+
+    BIND_KEY(left, gfmKey_left);
+    BIND_KEY(left, gfmKey_a);
+
+    BIND_KEY(right, gfmKey_right);
+    BIND_KEY(right, gfmKey_d);
+
+    BIND_KEY(up, gfmKey_up);
+    BIND_KEY(up, gfmKey_w);
+
+    BIND_KEY(down, gfmKey_down);
+    BIND_KEY(down, gfmKey_s);
+
+    BIND_KEY(act, gfmKey_x);
+    BIND_KEY(act, gfmKey_j);
+    BIND_KEY(act, gfmKey_lctrl);
+
+    BIND_KEY(pause, gfmKey_esc);
+    BIND_KEY(pause, gfmKey_p);
 
 #undef BIND_KEY
 

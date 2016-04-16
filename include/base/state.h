@@ -10,6 +10,7 @@
 enum enState {
     ST_NONE = 0,
     ST_INTRO,
+    ST_PAUSE,
     ST_MAX,
 };
 typedef enum enState state;

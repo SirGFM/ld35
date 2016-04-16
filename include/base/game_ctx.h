@@ -108,6 +108,7 @@ struct stGameCtx {
     gameFlags flags;
     /** Currently running state (e.g., ST_PLAYSTATE) */
     state curState;
+    state pushedState;
     /** If different from 'ST_NONE', the state to which the game must switch on
      * the end of this frame */
     state nextState;
@@ -152,6 +153,12 @@ struct stButtonCtx {
     /** Update a single frame and pause */
     button dbgStep;
 #endif
+    button left;
+    button right;
+    button up;
+    button down;
+    button act;
+    button pause;
     /* TODO Add buttons */
 };
 
