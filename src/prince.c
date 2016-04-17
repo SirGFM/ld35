@@ -23,8 +23,8 @@ enum {
 static int prince_data[] = {
 /*                   len|fps|loop|data ... */
 /*PRINCE_STAND     */1 , 0 , 0  , 32,
-/*PRINCE_WALK      */1 , 0 , 0  , 32,
-/*PRINCE_SLASH     */2 , 4 , 0  , 32,PRINCE_SLASH_FRAME,32,
+/*PRINCE_WALK      */4 , 8 , 1  , 33,32,34,32,
+/*PRINCE_SLASH     */3 , 12, 0  , 35,36,37,
 /*PRINCE_HURT      */1 , 0 , 0  , 32,
 /*PRINCE_SHAPESHIFT*/1 , 0 , 0  , 32,
 };
@@ -110,6 +110,11 @@ gfmRV prince_update() {
     ASSERT(rv == GFMRV_OK, rv);
 
     if ((pButton->act.state & gfmInput_justPressed) == gfmInput_justPressed) {
+        if (pGlobal->playerAnim != PRINCE_SLASH) {
+            rv = prince_spawn_slash();
+            ASSERT(rv == GFMRV_OK, rv);
+        }
+
         PLAY(PRINCE_SLASH);
     }
 
@@ -122,17 +127,6 @@ gfmRV prince_update() {
         ASSERT(rv == GFMRV_OK, rv);
     }
 
-    if (gfmSprite_didAnimationJustChangeFrame(pGlobal->pPlayer) == GFMRV_TRUE) {
-        int frame;
-
-        rv = gfmSprite_getFrame(&frame, pGlobal->pPlayer);
-        ASSERT(rv == GFMRV_OK, rv);
-
-        if (frame == PRINCE_SLASH_FRAME) {
-            rv = prince_spawn_slash();
-            ASSERT(rv == GFMRV_OK, rv);
-        }
-    }
     if (pGlobal->playerAnim == PRINCE_SLASH &&
             gfmSprite_didAnimationFinish(pGlobal->pPlayer) == GFMRV_TRUE) {
         pGlobal->playerAnim = -1;

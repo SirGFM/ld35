@@ -90,7 +90,7 @@
 #define PRINCE_OFFX         -6
 #define PRINCE_OFFY         -4
 #define PRINCE_SSET         pGfx->pSset16x16
-#define PRINCE_SLASH_FRAME  33
+#define PRINCE_SLASH_FRAME  35
 
 #define SLASH_W             6
 #define SLASH_H             12
