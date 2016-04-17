@@ -4,6 +4,7 @@
 #=======================================================================
   OBJS =                           \
           $(OBJDIR)/assets.o       \
+          $(OBJDIR)/backstory.o    \
           $(OBJDIR)/collision.o    \
           $(OBJDIR)/config.o       \
           $(OBJDIR)/fairy.o        \

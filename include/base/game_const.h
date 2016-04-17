@@ -129,5 +129,26 @@
 #define FAIRY_OFFX          0
 #define FAIRY_OFFY          0
 
+#define BS_IMG_X            ((V_WIDTH - 64) / 2)
+#define BS_IMG_Y            ((V_HEIGHT - 32) / 2)
+#define BS_IMG_SSET         pGfx->pSset64x32
+#define BS_IMG_FIRST        16
+#define BS_IMG_FLIP         0
+
+#define TEXT_DELAY          120
+#define TEXT_BINDMODE       0
+#define TEXT_COPY           1
+
+#define BS_QKTEXT_X         8
+#define BS_QKTEXT_Y         8
+#define BS_QKTEXT_W         ((V_WIDTH - 16) / 8)
+#define BS_QKTEXT_LINES     1
+#define BS_QKTEXT_TEXT      "-- PRESS SPACE TO COMPLETE/SKIP --"
+
+#define BS_TEXT_X           8
+#define BS_TEXT_Y           (BS_IMG_Y + 32 + 8)
+#define BS_TEXT_W           ((V_WIDTH - 16) / 8)
+#define BS_TEXT_LINES       ((V_HEIGHT - BS_TEXT_Y - 8) / 8)
+
 #endif /* __GAME_CONST_H__ */
 

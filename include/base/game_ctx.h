@@ -14,6 +14,7 @@
 #include <GFraMe/gfmInput.h>
 #include <GFraMe/gfmQuadtree.h>
 #include <GFraMe/gfmSpriteset.h>
+#include <GFraMe/gfmText.h>
 #include <GFraMe/gfmTilemap.h>
 #include <GFraMe/core/gfmAudio_bkend.h>
 
@@ -123,6 +124,7 @@ struct stGfxCtx {
     /** 8x8 spriteset of the main texture */
     gfmSpriteset *pSset8x8;
     gfmSpriteset *pSset16x16;
+    gfmSpriteset *pSset64x32;
     /** Handle of the main texture atlas */
     int texHandle;
 };
@@ -204,6 +206,8 @@ struct stGlobalCtx {
     gfmGroup *pFloor;
     gfmGroup *pHitbox;
     gfmTilemap *pTilemap;
+    gfmText *pText;
+    gfmText *pQuickText;
     gfmGenArr_var(minion, pMinion);
     int globalTimer;
     int globalCounter;

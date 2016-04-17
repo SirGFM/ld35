@@ -9,6 +9,7 @@
 /* TODO Add more states */
 enum enState {
     ST_NONE = 0,
+    ST_BACKSTORY,
     ST_INTRO,
     ST_PAUSE,
     ST_MAX,

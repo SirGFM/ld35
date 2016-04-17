@@ -84,6 +84,22 @@ gfmRV global_initUserVar() {
     rv = gfmTilemap_getNew(&(pGlobal->pTilemap));
     ASSERT(rv == GFMRV_OK, rv);
 
+    rv = gfmText_getNew(&(pGlobal->pText));
+    ASSERT(rv == GFMRV_OK, rv);
+    rv = gfmText_init(pGlobal->pText, BS_TEXT_X, BS_TEXT_Y, BS_TEXT_W,
+            BS_TEXT_LINES, TEXT_DELAY, TEXT_BINDMODE, FPS_SSET, FPS_INIT);
+    ASSERT(rv == GFMRV_OK, rv);
+    rv = gfmText_getNew(&(pGlobal->pQuickText));
+    ASSERT(rv == GFMRV_OK, rv);
+    rv = gfmText_init(pGlobal->pQuickText, BS_QKTEXT_X, BS_QKTEXT_Y,
+            BS_QKTEXT_W, BS_QKTEXT_LINES, TEXT_DELAY, TEXT_BINDMODE, FPS_SSET,
+            FPS_INIT);
+    ASSERT(rv == GFMRV_OK, rv);
+    rv = gfmText_setTextStatic(pGlobal->pQuickText, BS_QKTEXT_TEXT, TEXT_COPY);
+    ASSERT(rv == GFMRV_OK, rv);
+    rv = gfmText_forceFinish(pGlobal->pQuickText);
+    ASSERT(rv == GFMRV_OK, rv);
+
     /* TODO Initialize everything */
 
     rv = GFMRV_OK;
@@ -102,5 +118,7 @@ void global_freeUserVar() {
     gfmQuadtree_free(&(pGlobal->pQt));
     gfmGenArr_clean(pGlobal->pMinion, minion_free);
     gfmTilemap_free(&(pGlobal->pTilemap));
+    gfmText_free(&(pGlobal->pText));
+    gfmText_free(&(pGlobal->pQuickText));
 }
 
