@@ -11,7 +11,7 @@
 
 static int fairy_data[] = {
 /*             len|fps|loop|data ... */
-/*FAIRY_STAND*/ 4 , 8 , 1  , 48,49,50,51
+/*FAIRY_STAND*/ 5 , 8 , 1  , 48,49,50,51,52
 };
 static int fairy_data_len = sizeof(fairy_data) / sizeof(int);
 
