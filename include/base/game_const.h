@@ -78,12 +78,7 @@
 #define PRT_PRINCE_FRAME    (65)
 #define PRT_HITBOX_MAX      100
 
-#define PRINCE_VX           200
-#define PRINCE_SLASH_ROFFX  15
-#define PRINCE_SLASH_LOFFX  -15
-#define PRINCE_SLASH_OFFY   -2
-
-#define PRINCE_X            16
+#define PRINCE_X            (V_WIDTH / 2)
 #define PRINCE_Y            (V_HEIGHT - 12 - 32)
 #define PRINCE_W            4
 #define PRINCE_H            12
@@ -91,6 +86,10 @@
 #define PRINCE_OFFY         -4
 #define PRINCE_SSET         pGfx->pSset16x16
 #define PRINCE_SLASH_FRAME  35
+#define PRINCE_VX           100
+#define PRINCE_SLASH_ROFFX  15
+#define PRINCE_SLASH_LOFFX  -15
+#define PRINCE_SLASH_OFFY   -2
 
 #define SLASH_W             6
 #define SLASH_H             12
@@ -108,6 +107,13 @@
 #define MINION_MODTIME      100
 #define MINION_VX           96
 #define MINION_VY           -100
+#define MINION_Y            (V_HEIGHT - 96)
+#define MINION_LX           16
+#define MINION_RX           (V_WIDTH - MINION_W - 16)
+
+#define MINION_MINSPAWNTIME 5
+#define MINION_MAXSPAWNTIME 25
+#define MINION_MODSPAWNTIME 100
 
 #define HITBOX_MAX_TIME     300
 

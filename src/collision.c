@@ -14,6 +14,7 @@
 #include <GFraMe/gfmTypes.h>
 
 #include <jam/minion.h>
+#include <jam/prince.h>
 #include <jam/type.h>
 
 #if defined(DEBUG) && !(defined(__WIN32) || defined(__WIN32__))
@@ -101,6 +102,19 @@ gfmRV collision_run() {
   case ((type1) | (type2 << 16)): \
   case ((type2) | (type1 << 16)):
         switch (orType) {
+            CASE(T_PRINCE, T_MINION) {
+                minion *pMinion;
+
+                if (isFirstCase) {
+                    pMinion = (minion*)pChild2;
+                }
+                else {
+                    pMinion = (minion*)pChild1;
+                }
+                if (minion_isAlive(pMinion) == GFMRV_TRUE) {
+                    rv = prince_hurt();
+                }
+            } break;
             CASE(T_FLOOR, T_MINION) {
                 gfmObject *pMinionObj;
                 minion *pMinion;
@@ -115,15 +129,18 @@ gfmRV collision_run() {
                     pMinion = (minion*)pChild1;
                 }
 
-                rv = gfmObject_getCurrentCollision(&dir, pMinionObj);
-                ASSERT(rv == GFMRV_OK, rv);
-
-                if (dir & gfmCollision_hor) {
-                    rv = minion_revert(pMinion);
+                rv = gfmObject_collide(pObj1, pObj2);
+                if (rv == GFMRV_TRUE) {
+                    rv = gfmObject_getCurrentCollision(&dir, pMinionObj);
                     ASSERT(rv == GFMRV_OK, rv);
-                }
-                if (dir & gfmCollision_down) {
-                    rv = gfmObject_setVerticalVelocity(pMinionObj, 0);
+
+                    if (dir & gfmCollision_hor) {
+                        rv = minion_revert(pMinion);
+                        ASSERT(rv == GFMRV_OK, rv);
+                    }
+                    if (dir & gfmCollision_down) {
+                        rv = gfmObject_setVerticalVelocity(pMinionObj, 0);
+                    }
                 }
             } break;
             CASE(T_SLASH, T_MINION) {
@@ -136,6 +153,7 @@ gfmRV collision_run() {
             } break;
             IGNORESIMPLE(T_SLASH)
             IGNORESIMPLE(T_FLOOR)
+            IGNORESIMPLE(T_MINION)
             IGNORE(T_PRINCE, T_SLASH)
             IGNORE(T_FLOOR, T_SLASH)
             IGNORE(T_FLOOR, T_PRINCE) {

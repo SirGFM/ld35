@@ -43,6 +43,13 @@ struct stMinion {
     int sign;
 };
 
+gfmRV minion_isAlive(minion *pMinion) {
+    if (pMinion->anim == MINION_HURT) {
+        return GFMRV_FALSE;
+    }
+    return GFMRV_TRUE;
+}
+
 gfmRV minion_hurt(minion *pMinion) {
     gfmRV rv;
 
@@ -51,6 +58,8 @@ gfmRV minion_hurt(minion *pMinion) {
     }
 
     PLAY(MINION_HURT);
+    rv = gfmSprite_setHorizontalVelocity(pMinion->pSelf, 0);
+    ASSERT(rv == GFMRV_OK, rv);
 
     rv = GFMRV_OK;
 __ret:
@@ -76,10 +85,16 @@ static gfmRV minion_getNew(minion **ppMinion) {
     pMinion = (minion*)malloc(sizeof(minion));
     ASSERT(pMinion, GFMRV_ALLOC_FAILED);
     memset(pMinion, 0x0, sizeof(minion));
+    rv = gfmSprite_getNew(&(pMinion->pSelf));
+    ASSERT(rv == GFMRV_OK, rv);
 
     *ppMinion = pMinion;
     rv = GFMRV_OK;
 __ret:
+    if (rv != GFMRV_OK && pMinion) {
+        free(pMinion);
+    }
+
     return rv;
 }
 
@@ -141,9 +156,13 @@ static gfmRV minion_update(minion *pMinion) {
     rv = gfmSprite_getCollision(&dir, pMinion->pSelf);
     ASSERT(rv == GFMRV_OK, rv);
 
-    if ((dir & gfmCollision_down) && pMinion->time <= 0) {
+    if (pMinion->anim == MINION_HURT) {
+        /* Ignore everything */
+    }
+    else if ((dir & gfmCollision_down) && pMinion->time <= 0) {
         pMinion->time += RNG(MINION_MINTIME, MINION_MAXTIME, MINION_MODTIME);
-        rv = gfmSprite_setVelocity(pMinion->pSelf, MINION_VX, MINION_VY);
+        rv = gfmSprite_setVelocity(pMinion->pSelf, pMinion->sign * MINION_VX,
+                MINION_VY);
         ASSERT(rv == GFMRV_OK, rv);
     }
     else if (dir & gfmCollision_down) {

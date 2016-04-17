@@ -66,6 +66,10 @@ __ret:
     return rv;
 }
 
+gfmRV prince_hurt() {
+    return GFMRV_OK;
+}
+
 gfmRV prince_init() {
     gfmRV rv;
 

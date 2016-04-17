@@ -9,6 +9,7 @@ typedef struct stMinion minion;
 
 #include <GFraMe/gfmError.h>
 
+gfmRV minion_isAlive(minion *pMinion);
 gfmRV minion_hurt(minion *pMinion);
 gfmRV minion_revert(minion *pMinion);
 

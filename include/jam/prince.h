@@ -4,6 +4,7 @@
 
 #include <GFraMe/gfmError.h>
 
+gfmRV prince_hurt();
 gfmRV prince_init();
 gfmRV prince_update();
 gfmRV prince_postUpdate();

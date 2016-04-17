@@ -10,6 +10,7 @@
 
 #include <jam/prince.h>
 #include <jam/type.h>
+#include <jam/minion.h>
 
 gfmRV intro_init() {
     gfmSprite *pFloor;
@@ -34,6 +35,8 @@ gfmRV intro_init() {
     rv = gfmSprite_init(pFloor, x, y, w, h, pGfx->pSset8x8, 0/*offx*/,
             0/*offy*/, 0/*child*/, T_FLOOR);
     ASSERT(rv == GFMRV_OK, rv);
+    rv = gfmSprite_setFixed(pFloor);
+    ASSERT(rv == GFMRV_OK, rv);
 
     pFloor = 0;
     x = V_WIDTH;
@@ -45,6 +48,8 @@ gfmRV intro_init() {
     rv = gfmSprite_init(pFloor, x, y, w, h, pGfx->pSset8x8, 0/*offx*/,
             0/*offy*/, 0/*child*/, T_FLOOR);
     ASSERT(rv == GFMRV_OK, rv);
+    rv = gfmSprite_setFixed(pFloor);
+    ASSERT(rv == GFMRV_OK, rv);
 
     pFloor = 0;
     x = -8;
@@ -55,6 +60,8 @@ gfmRV intro_init() {
     ASSERT(rv == GFMRV_OK, rv);
     rv = gfmSprite_init(pFloor, x, y, w, h, pGfx->pSset8x8, 0/*offx*/,
             0/*offy*/, 0/*child*/, T_FLOOR);
+    ASSERT(rv == GFMRV_OK, rv);
+    rv = gfmSprite_setFixed(pFloor);
     ASSERT(rv == GFMRV_OK, rv);
 
     pGlobal->globalTimer = 0;
@@ -74,6 +81,29 @@ gfmRV intro_update() {
 
     /* ---- update ---------------------------------------------------------- */
 
+    if (pGlobal->globalTimer <= 0) {
+        int x, dir;
+
+        pGlobal->globalCounter++;
+        pGlobal->globalTimer += RNG(MINION_MINSPAWNTIME, MINION_MAXSPAWNTIME,
+                MINION_MODSPAWNTIME) * (8 / pGlobal->globalCounter);
+
+        if (pGlobal->globalCounter % 2 == 0) {
+            x = MINION_LX;
+            dir = 0;
+        }
+        else {
+            x = MINION_RX;
+            dir = 1;
+        }
+
+        rv = minion_spawn(x, MINION_Y, dir);
+        ASSERT(rv == GFMRV_OK, rv);
+    }
+    else {
+        pGlobal->globalTimer -= pGame->elapsed;
+    }
+
     rv = gfmGroup_update(pGlobal->pFloor, pGame->pCtx);
     ASSERT(rv == GFMRV_OK, rv);
     rv = gfmQuadtree_collideGroup(pGlobal->pQt, pGlobal->pFloor);
@@ -82,6 +112,8 @@ gfmRV intro_update() {
         ASSERT(rv == GFMRV_OK, rv);
     }
 
+    rv = minion_updateAll();
+    ASSERT(rv == GFMRV_OK, rv);
     rv = prince_update();
     ASSERT(rv == GFMRV_OK, rv);
 
@@ -95,6 +127,8 @@ gfmRV intro_update() {
 
     /* ---- post-update ----------------------------------------------------- */
 
+    rv = minion_postUpdateAll();
+    ASSERT(rv == GFMRV_OK, rv);
     rv = prince_postUpdate();
     ASSERT(rv == GFMRV_OK, rv);
 
@@ -106,6 +140,8 @@ __ret:
 gfmRV intro_draw() {
     gfmRV rv;
 
+    rv = minion_drawAll();
+    ASSERT(rv == GFMRV_OK, rv);
     rv = prince_draw();
     ASSERT(rv == GFMRV_OK, rv);
 
