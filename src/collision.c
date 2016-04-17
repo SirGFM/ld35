@@ -135,6 +135,7 @@ gfmRV collision_run() {
                 }
             } break;
             IGNORESIMPLE(T_SLASH)
+            IGNORESIMPLE(T_FLOOR)
             IGNORE(T_PRINCE, T_SLASH)
             IGNORE(T_FLOOR, T_SLASH)
             IGNORE(T_FLOOR, T_PRINCE) {

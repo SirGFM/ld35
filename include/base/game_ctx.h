@@ -201,6 +201,8 @@ struct stGlobalCtx {
     gfmGroup *pFloor;
     gfmGroup *pHitbox;
     gfmGenArr_var(minion, pMinion);
+    int globalTimer;
+    int globalCounter;
     int playerAnim;
     /* TODO Add any other globally accessible variable (e.g., a tilemap) */
 };
