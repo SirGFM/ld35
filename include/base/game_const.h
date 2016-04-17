@@ -70,6 +70,9 @@
 
 /* == ... =================================================================== */
 
+#define GRAV                500
+#define VERTICAL_OOB        1000
+
 #define PRT_FLOOR_Y         (V_HEIGHT - 32)
 #define PRT_FLOOR_MAX       8
 #define PRT_PRINCE_FRAME    (65)
@@ -94,6 +97,17 @@
 #define SLASH_SSET          pGfx->pSset16x16
 #define SLASH_OFFX          -8
 #define SLASH_OFFY          -4
+
+#define MINION_W            12
+#define MINION_H            8
+#define MINION_SSET         pGfx->pSset16x16
+#define MINION_OFFX         -12
+#define MINION_OFFY         -4
+#define MINION_MINTIME      0
+#define MINION_MAXTIME      20
+#define MINION_MODTIME      100
+#define MINION_VX           96
+#define MINION_VY           -100
 
 #define HITBOX_MAX_TIME     300
 

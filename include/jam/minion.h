@@ -9,6 +9,9 @@ typedef struct stMinion minion;
 
 #include <GFraMe/gfmError.h>
 
+gfmRV minion_hurt(minion *pMinion);
+gfmRV minion_revert(minion *pMinion);
+
 void minion_free(minion **ppMinion);
 gfmRV minion_spawn(int x, int y, int dir);
 gfmRV minion_updateAll();

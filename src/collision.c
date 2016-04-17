@@ -13,6 +13,7 @@
 #include <GFraMe/gfmSprite.h>
 #include <GFraMe/gfmTypes.h>
 
+#include <jam/minion.h>
 #include <jam/type.h>
 
 #if defined(DEBUG) && !(defined(__WIN32) || defined(__WIN32__))
@@ -100,15 +101,38 @@ gfmRV collision_run() {
   case ((type1) | (type2 << 16)): \
   case ((type2) | (type1 << 16)):
         switch (orType) {
-            CASE(T_SLASH, T_MINION) {
+            CASE(T_FLOOR, T_MINION) {
+                gfmObject *pMinionObj;
+                minion *pMinion;
+
+                gfmCollision dir;
                 if (isFirstCase) {
-                    /* Slash is obj1 */
+                    pMinionObj = pObj2;
+                    pMinion = (minion*)pChild2;
                 }
                 else {
-                    /* Slash is obj2 */
+                    pMinionObj = pObj1;
+                    pMinion = (minion*)pChild1;
                 }
 
-                /* TODO Implement collision between slash and minion */
+                rv = gfmObject_getCurrentCollision(&dir, pMinionObj);
+                ASSERT(rv == GFMRV_OK, rv);
+
+                if (dir & gfmCollision_hor) {
+                    rv = minion_revert(pMinion);
+                    ASSERT(rv == GFMRV_OK, rv);
+                }
+                if (dir & gfmCollision_down) {
+                    rv = gfmObject_setVerticalVelocity(pMinionObj, 0);
+                }
+            } break;
+            CASE(T_SLASH, T_MINION) {
+                if (isFirstCase) {
+                    rv = minion_hurt((minion*)pChild2);
+                }
+                else {
+                    rv = minion_hurt((minion*)pChild1);
+                }
             } break;
             IGNORESIMPLE(T_SLASH)
             IGNORE(T_PRINCE, T_SLASH)

@@ -205,5 +205,7 @@ struct stGlobalCtx {
     /* TODO Add any other globally accessible variable (e.g., a tilemap) */
 };
 
+#define RNG(MIN, MAX, MOD) (((rand() % (MAX - MIN)) + MIN) * MOD)
+
 #endif /* __GAME_CTX_H__ */
 
