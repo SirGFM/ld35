@@ -90,7 +90,10 @@ gfmRV prince_update() {
     gfmRV rv;
     double vx;
 
-    if (pButton->left.state & gfmInput_pressed) {
+    if (pGlobal->playerAnim == PRINCE_SLASH) {
+        vx = 0;
+    }
+    else if (pButton->left.state & gfmInput_pressed) {
         vx = -PRINCE_VX;
         rv = gfmSprite_setDirection(pGlobal->pPlayer, 1);
         ASSERT(rv == GFMRV_OK, rv);
