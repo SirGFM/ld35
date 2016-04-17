@@ -82,11 +82,16 @@ gfmRV intro_update() {
     /* ---- update ---------------------------------------------------------- */
 
     if (pGlobal->globalTimer <= 0) {
-        int x, dir;
+        int x, rng, dir;
 
         pGlobal->globalCounter++;
-        pGlobal->globalTimer += RNG(MINION_MINSPAWNTIME, MINION_MAXSPAWNTIME,
-                MINION_MODSPAWNTIME) * (8 / pGlobal->globalCounter);
+        pGlobal->globalTimer += MINION_BASESPAWNTIME;
+        rng = RNG(MINION_MINSPAWNTIME, MINION_MAXSPAWNTIME,
+                MINION_MODSPAWNTIME);
+        if (pGlobal->globalCounter > 8) {
+            rng *= 8.0 / pGlobal->globalCounter;
+        }
+        pGlobal->globalTimer += rng;
 
         if (pGlobal->globalCounter % 2 == 0) {
             x = MINION_LX;
