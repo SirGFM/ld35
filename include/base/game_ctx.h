@@ -220,6 +220,7 @@ struct stGlobalCtx {
     gfmTilemap *pTilemap;
     gfmText *pText;
     gfmText *pQuickText;
+    gfmAudioHandle *pCurSong;
     gfmGenArr_var(minion, pMinion);
     int globalTimer;
     int globalCounter;
@@ -228,13 +229,23 @@ struct stGlobalCtx {
 };
 
 #define RNG(MIN, MAX, MOD) (((rand() % (MAX - MIN)) + MIN) * MOD)
-//#define PLAY_SONG(var) 
+
+#define PLAY_SONG(var, vol) \
+  do { \
+    if (pGlobal->pCurSong) { \
+      rv = gfm_stopAudio(pGlobal->pCurSong, pGame->pCtx); \
+      ASSERT(rv == GFMRV_OK, rv); \
+    } \
+    pGlobal->pCurSong = 0; \
+    rv = gfm_playAudio(&(pGlobal->pCurSong), pGame->pCtx, pAudio->var, vol); \
+    ASSERT(rv == GFMRV_OK, rv); \
+  } while (0)
 
 #define PLAY_SFX(var, vol) \
   do { \
     rv = gfm_playAudio(0, pGame->pCtx, pAudio->var, vol); \
     ASSERT(rv == GFMRV_OK, rv); \
-  } while (0);
+  } while (0)
 
 #endif /* __GAME_CTX_H__ */
 

@@ -21,6 +21,8 @@ gfmRV bs_init() {
     rv = gfmText_forceFinish(pGlobal->pText);
     ASSERT(rv == GFMRV_OK, rv);
 
+    PLAY_SONG(song_bs, 0.6);
+
     rv = GFMRV_OK;
 __ret:
     return rv;
