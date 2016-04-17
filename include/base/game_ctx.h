@@ -131,6 +131,18 @@ struct stGfxCtx {
 
 /** Store all handles to songs and sound effects */
 struct stAudioCtx {
+    int minion_spawn;
+    int minion_atk;
+    int minion_land;
+    int minion_hit;
+    int prince_slash;
+    int prince_hit;
+    int prince_transform;
+    int text;
+
+    int song_menu;
+    int song_bs;
+    int song_game;
     /* TODO Add any song/sfx here */
 };
 

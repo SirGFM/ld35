@@ -129,6 +129,8 @@
 #define FAIRY_OFFX          0
 #define FAIRY_OFFY          0
 
+#define BS_BGCOLOR          0xff000000
+
 #define BS_IMG_X            ((V_WIDTH - 64) / 2)
 #define BS_IMG_Y            ((V_HEIGHT - 32) / 2)
 #define BS_IMG_SSET         pGfx->pSset64x32
