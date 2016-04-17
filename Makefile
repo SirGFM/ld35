@@ -6,6 +6,7 @@
           $(OBJDIR)/assets.o       \
           $(OBJDIR)/collision.o    \
           $(OBJDIR)/config.o       \
+          $(OBJDIR)/fairy.o        \
           $(OBJDIR)/global.o       \
           $(OBJDIR)/group_helper.o \
           $(OBJDIR)/input.o        \

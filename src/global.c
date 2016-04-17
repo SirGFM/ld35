@@ -78,6 +78,8 @@ gfmRV global_initUserVar() {
     ASSERT(rv == GFMRV_OK, rv);
     rv = gfmSprite_getNew(&(pGlobal->pPlayer));
     ASSERT(rv == GFMRV_OK, rv);
+    rv = gfmSprite_getNew(&(pGlobal->pFairy));
+    ASSERT(rv == GFMRV_OK, rv);
 
     rv = gfmTilemap_getNew(&(pGlobal->pTilemap));
     ASSERT(rv == GFMRV_OK, rv);
@@ -96,6 +98,7 @@ void global_freeUserVar() {
     gfmGroup_free(&(pGlobal->pFloor));
     gfmGroup_free(&(pGlobal->pHitbox));
     gfmSprite_free(&(pGlobal->pPlayer));
+    gfmSprite_free(&(pGlobal->pFairy));
     gfmQuadtree_free(&(pGlobal->pQt));
     gfmGenArr_clean(pGlobal->pMinion, minion_free);
     gfmTilemap_free(&(pGlobal->pTilemap));

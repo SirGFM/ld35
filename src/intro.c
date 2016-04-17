@@ -8,6 +8,7 @@
 #include <GFraMe/gfmError.h>
 #include <GFraMe/gfmSprite.h>
 
+#include <jam/fairy.h>
 #include <jam/prince.h>
 #include <jam/type.h>
 #include <jam/minion.h>
@@ -26,6 +27,8 @@ gfmRV intro_init() {
     int x, y, w, h;
 
     rv = gfm_setBackground(pGame->pCtx, INTRO_BGCOLOR);
+    ASSERT(rv == GFMRV_OK, rv);
+    rv = fairy_init();
     ASSERT(rv == GFMRV_OK, rv);
 
     rv = gfmTilemap_init(pGlobal->pTilemap, pGfx->pSset16x16, 20/*w*/, 15/*h*/,
@@ -131,6 +134,8 @@ gfmRV intro_update() {
 
     rv = gfmTilemap_update(pGlobal->pTilemap, pGame->pCtx);
     ASSERT(rv == GFMRV_OK, rv);
+    rv = fairy_update();
+    ASSERT(rv == GFMRV_OK, rv);
 
     rv = gfmGroup_update(pGlobal->pFloor, pGame->pCtx);
     ASSERT(rv == GFMRV_OK, rv);
@@ -176,6 +181,9 @@ gfmRV intro_draw() {
     ASSERT(rv == GFMRV_OK, rv);
 
     rv = gfmGroup_draw(pGlobal->pHitbox, pGame->pCtx);
+    ASSERT(rv == GFMRV_OK, rv);
+
+    rv = fairy_draw();
     ASSERT(rv == GFMRV_OK, rv);
 
     rv = GFMRV_OK;

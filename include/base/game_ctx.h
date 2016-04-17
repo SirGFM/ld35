@@ -198,6 +198,7 @@ gfmGenArr_define(minion);
 struct stGlobalCtx {
     /** The quadtree for collision */
     gfmQuadtreeRoot *pQt;
+    gfmSprite *pFairy;
     gfmSprite *pPlayer;
     gfmGroup *pFloor;
     gfmGroup *pHitbox;

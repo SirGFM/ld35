@@ -10,7 +10,7 @@
 #include <jam/type.h>
 #include <jam/slash.h>
 
-static int slash_data[] = {18,19,20,21};
+static int slash_data[] = {18,19,20,16};
 
 gfmRV spawn_slash(int x, int y, int flip) {
     gfmSprite *pSlash;

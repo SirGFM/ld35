@@ -121,5 +121,13 @@
 #define INTRO_BGCOLOR       0xff5b6ee1
 #define INTRO_TILEMAP       "intro.gfm"
 
+#define FAIRY_X             ((V_WIDTH - 16) / 2)
+#define FAIRY_Y             64
+#define FAIRY_W             16
+#define FAIRY_H             16
+#define FAIRY_SSET          pGfx->pSset16x16
+#define FAIRY_OFFX          0
+#define FAIRY_OFFY          0
+
 #endif /* __GAME_CONST_H__ */
 
