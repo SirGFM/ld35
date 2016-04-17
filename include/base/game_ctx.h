@@ -193,6 +193,7 @@ struct stGlobalCtx {
     gfmSprite *pPlayer;
     gfmGroup *pFloor;
     gfmGroup *pHitbox;
+    int playerAnim;
     /* TODO Add any other globally accessible variable (e.g., a tilemap) */
 };
 

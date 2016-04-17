@@ -80,6 +80,15 @@
 #define PRINCE_SLASH_LOFFX  -15
 #define PRINCE_SLASH_OFFY   -2
 
+#define PRINCE_X            16
+#define PRINCE_Y            (V_HEIGHT - 12 - 32)
+#define PRINCE_W            4
+#define PRINCE_H            12
+#define PRINCE_OFFX         -6
+#define PRINCE_OFFY         -4
+#define PRINCE_SSET         pGfx->pSset16x16
+#define PRINCE_SLASH_FRAME  33
+
 #define SLASH_W             6
 #define SLASH_H             12
 #define SLASH_SSET          pGfx->pSset16x16

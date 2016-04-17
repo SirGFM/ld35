@@ -32,6 +32,8 @@ gfmRV intro_update() {
             V_HEIGHT+16, QT_MAX_DEPTH, QT_MAX_NODES);
     ASSERT(rv == GFMRV_OK, rv);
 
+    /* ---- update ---------------------------------------------------------- */
+
     rv = gfmGroup_update(pGlobal->pFloor, pGame->pCtx);
     ASSERT(rv == GFMRV_OK, rv);
     rv = gfmQuadtree_collideGroup(pGlobal->pQt, pGlobal->pFloor);
@@ -50,6 +52,11 @@ gfmRV intro_update() {
         rv = collision_run();
         ASSERT(rv == GFMRV_OK, rv);
     }
+
+    /* ---- post-update ----------------------------------------------------- */
+
+    rv = prince_postUpdate();
+    ASSERT(rv == GFMRV_OK, rv);
 
     rv = GFMRV_OK;
 __ret:
