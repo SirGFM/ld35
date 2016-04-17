@@ -228,6 +228,13 @@ struct stGlobalCtx {
 };
 
 #define RNG(MIN, MAX, MOD) (((rand() % (MAX - MIN)) + MIN) * MOD)
+//#define PLAY_SONG(var) 
+
+#define PLAY_SFX(var, vol) \
+  do { \
+    rv = gfm_playAudio(0, pGame->pCtx, pAudio->var, vol); \
+    ASSERT(rv == GFMRV_OK, rv); \
+  } while (0);
 
 #endif /* __GAME_CTX_H__ */
 

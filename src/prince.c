@@ -72,6 +72,7 @@ gfmRV prince_hurt() {
     }
 
     PLAY(PRINCE_HURT);
+    PLAY_SFX(prince_hit, 0.6);
 
     rv = GFMRV_OK;
 __ret:
@@ -129,6 +130,7 @@ gfmRV prince_update() {
         if (pGlobal->playerAnim != PRINCE_SLASH) {
             rv = prince_spawn_slash();
             ASSERT(rv == GFMRV_OK, rv);
+            PLAY_SFX(prince_slash, 0.4);
         }
 
         PLAY(PRINCE_SLASH);
@@ -136,6 +138,19 @@ gfmRV prince_update() {
 
     rv = gfmSprite_update(pGlobal->pPlayer, pGame->pCtx);
     ASSERT(rv == GFMRV_OK, rv);
+
+    if (pGlobal->playerAnim == PRINCE_HURT &&
+            gfmSprite_didAnimationJustChangeFrame(pGlobal->pPlayer) ==
+            GFMRV_TRUE) {
+        int frame;
+
+        rv = gfmSprite_getFrame(&frame, pGlobal->pPlayer);
+        ASSERT(rv == GFMRV_OK, rv);
+
+        if (frame == 86) {
+            PLAY_SFX(prince_transform, 0.6);
+        }
+    }
 
     rv = gfmQuadtree_collideSprite(pGlobal->pQt, pGlobal->pPlayer);
     if (rv == GFMRV_QUADTREE_OVERLAPED) {

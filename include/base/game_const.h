@@ -137,7 +137,7 @@
 #define BS_IMG_FIRST        16
 #define BS_IMG_FLIP         0
 
-#define TEXT_DELAY          120
+#define TEXT_DELAY          60
 #define TEXT_BINDMODE       0
 #define TEXT_COPY           1
 

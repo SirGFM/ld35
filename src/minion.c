@@ -58,6 +58,7 @@ gfmRV minion_hurt(minion *pMinion) {
     }
 
     PLAY(MINION_HURT);
+    PLAY_SFX(minion_hit, 0.5);
     rv = gfmSprite_setHorizontalVelocity(pMinion->pSelf, 0);
     ASSERT(rv == GFMRV_OK, rv);
 
@@ -141,6 +142,8 @@ gfmRV minion_spawn(int x, int y, int flip) {
 
     gfmGenArr_push(pGlobal->pMinion);
 
+    PLAY_SFX(minion_spawn, 0.3);
+
     rv = GFMRV_OK;
 __ret:
     return rv;
@@ -148,12 +151,14 @@ __ret:
 
 static gfmRV minion_update(minion *pMinion) {
     gfmRV rv;
-    gfmCollision dir;
+    gfmCollision dir, lastDir;
 
     if (pMinion->time  > 0) {
         pMinion->time -= pGame->elapsed;
     }
     rv = gfmSprite_getCollision(&dir, pMinion->pSelf);
+    ASSERT(rv == GFMRV_OK, rv);
+    rv = gfmSprite_getLastCollision(&lastDir, pMinion->pSelf);
     ASSERT(rv == GFMRV_OK, rv);
 
     if (pMinion->anim == MINION_HURT) {
@@ -164,10 +169,15 @@ static gfmRV minion_update(minion *pMinion) {
         rv = gfmSprite_setVelocity(pMinion->pSelf, pMinion->sign * MINION_VX,
                 MINION_VY);
         ASSERT(rv == GFMRV_OK, rv);
+        PLAY_SFX(minion_atk, 0.4);
     }
     else if (dir & gfmCollision_down) {
         rv = gfmSprite_setHorizontalVelocity(pMinion->pSelf, 0);
         ASSERT(rv == GFMRV_OK, rv);
+    }
+
+    if ((dir & gfmCollision_down) && !(lastDir & gfmCollision_down)) {
+        PLAY_SFX(minion_land, 0.3);
     }
 
     rv = gfmSprite_update(pMinion->pSelf, pGame->pCtx);

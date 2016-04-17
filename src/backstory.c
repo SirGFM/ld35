@@ -13,6 +13,9 @@ gfmRV bs_init() {
 
     pGlobal->globalCounter = -1;
 
+    rv = gfm_setBackground(pGame->pCtx, BS_BGCOLOR);
+    ASSERT(rv == GFMRV_OK, rv);
+
     rv = gfmText_setTextStatic(pGlobal->pText, "dummy!", TEXT_COPY);
     ASSERT(rv == GFMRV_OK, rv);
     rv = gfmText_forceFinish(pGlobal->pText);
@@ -74,6 +77,16 @@ gfmRV bs_update() {
 
         rv = gfmText_update(pGlobal->pText, pGame->pCtx);
         ASSERT(rv == GFMRV_OK, rv);
+
+#if 0
+        do {
+            char c;
+
+            if (gfmText_getJustRendered(&c, pGlobal->pText) == GFMRV_OK) {
+                PLAY_SFX(text, 0.3);
+            }
+        } while (0);
+#endif
     }
 
     rv = GFMRV_OK;
