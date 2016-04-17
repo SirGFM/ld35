@@ -120,6 +120,7 @@ struct stGameCtx {
 struct stGfxCtx {
     /** 8x8 spriteset of the main texture */
     gfmSpriteset *pSset8x8;
+    gfmSpriteset *pSset16x16;
     /** Handle of the main texture atlas */
     int texHandle;
 };

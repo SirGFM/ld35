@@ -32,6 +32,7 @@ gfmRV assets_load() {
             KEY_COLOR);
     ASSERT(rv == GFMRV_OK, rv);
     GEN_SPRITESET(8, 8);
+    GEN_SPRITESET(16, 16);
 
     rv = GFMRV_OK;
 __ret:

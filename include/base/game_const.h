@@ -76,15 +76,15 @@
 #define PRT_HITBOX_MAX      100
 
 #define PRINCE_VX           200
-#define PRINCE_SLASH_ROFFX  8
-#define PRINCE_SLASH_LOFFX  -8
-#define PRINCE_SLASH_OFFY   0
+#define PRINCE_SLASH_ROFFX  15
+#define PRINCE_SLASH_LOFFX  -15
+#define PRINCE_SLASH_OFFY   -2
 
-#define SLASH_W             8
-#define SLASH_H             8
-#define SLASH_SSET          pGfx->pSset8x8
-#define SLASH_OFFX          0
-#define SLASH_OFFY          0
+#define SLASH_W             6
+#define SLASH_H             12
+#define SLASH_SSET          pGfx->pSset16x16
+#define SLASH_OFFX          -8
+#define SLASH_OFFY          -4
 
 #define HITBOX_MAX_TIME     300
 

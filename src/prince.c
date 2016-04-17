@@ -10,23 +10,16 @@
 
 #include <jam/prince.h>
 #include <jam/type.h>
+#include <jam/slash.h>
 
-static gfmRV spawn_slash() {
-    gfmSprite *pSlash;
-    gfmGroupNode *pChild;
+
+static gfmRV prince_spawn_slash() {
     gfmRV rv;
-    int x, y, flip, type;
+    int x, y, flip;
 
     rv = gfmSprite_getPosition(&x, &y, pGlobal->pPlayer);
     ASSERT(rv == GFMRV_OK, rv);
     rv = gfmSprite_getDirection(&flip, pGlobal->pPlayer);
-    ASSERT(rv == GFMRV_OK, rv);
-
-    pSlash = 0;
-    rv = gfmGroup_recycle(&pSlash, pGlobal->pHitbox);
-    ASSERT(rv == GFMRV_OK, rv);
-    pChild = 0;
-    rv = gfmSprite_getChild((void**)&pChild, &type, pSlash);
     ASSERT(rv == GFMRV_OK, rv);
 
     if (flip) {
@@ -37,10 +30,8 @@ static gfmRV spawn_slash() {
     }
     y += PRINCE_SLASH_OFFY;
 
-    rv = gfmSprite_init(pSlash, x, y, SLASH_W, SLASH_H, SLASH_SSET,
-            SLASH_OFFX, SLASH_OFFY, pChild, T_SLASH);
-    ASSERT(rv == GFMRV_OK, rv);
-    rv = gfmSprite_setFrame(pSlash, 3);
+
+    rv = spawn_slash(x, y, flip);
     ASSERT(rv == GFMRV_OK, rv);
 
     rv = GFMRV_OK;
@@ -85,7 +76,7 @@ gfmRV prince_update() {
     }
 
     if ((pButton->act.state & gfmInput_justPressed) == gfmInput_justPressed) {
-        rv = spawn_slash();
+        rv = prince_spawn_slash();
         ASSERT(rv == GFMRV_OK, rv);
     }
 
