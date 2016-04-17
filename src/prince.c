@@ -17,7 +17,6 @@ enum {
     PRINCE_WALK,
     PRINCE_SLASH,
     PRINCE_HURT,
-    PRINCE_SHAPESHIFT
 };
 
 static int prince_data[] = {
@@ -25,8 +24,7 @@ static int prince_data[] = {
 /*PRINCE_STAND     */1 , 0 , 0  , 32,
 /*PRINCE_WALK      */4 , 8 , 1  , 33,32,34,32,
 /*PRINCE_SLASH     */3 , 12, 0  , 35,36,37,
-/*PRINCE_HURT      */8 , 8 , 0  , 38,39,38,39,38,39,38,39,
-/*PRINCE_SHAPESHIFT*/1 , 0 , 0  , 32,
+/*PRINCE_HURT      */15, 12, 0  , 38,39,38,39,38,39,38,39,39,86,85,84,83,83,80
 };
 static int prince_data_len = sizeof(prince_data) / sizeof(int);
 
