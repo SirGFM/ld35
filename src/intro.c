@@ -19,6 +19,7 @@ gfmRV intro_init() {
     ASSERT(rv == GFMRV_OK, rv);
     rv = gfmGroup_killAll(pGlobal->pHitbox);
     ASSERT(rv == GFMRV_OK, rv);
+    gfmGenArr_reset(pGlobal->pMinion);
 
     rv = GFMRV_OK;
 __ret:

@@ -9,6 +9,7 @@
 #include <base/state.h>
 
 #include <GFraMe/gframe.h>
+#include <GFraMe/gfmGenericArray.h>
 #include <GFraMe/gfmGroup.h>
 #include <GFraMe/gfmInput.h>
 #include <GFraMe/gfmQuadtree.h>
@@ -186,6 +187,12 @@ struct stConfigCtx {
     /* TODO Add button mapping */
 };
 
+#ifndef __MINION_STRUCT__
+#define __MINION_STRUCT__
+typedef struct stMinion minion;
+#endif /* __MINION_STRUCT__ */
+gfmGenArr_define(minion);
+
 /** Store game-related variables that should be globally accessible */
 struct stGlobalCtx {
     /** The quadtree for collision */
@@ -193,6 +200,7 @@ struct stGlobalCtx {
     gfmSprite *pPlayer;
     gfmGroup *pFloor;
     gfmGroup *pHitbox;
+    gfmGenArr_var(minion, pMinion);
     int playerAnim;
     /* TODO Add any other globally accessible variable (e.g., a tilemap) */
 };

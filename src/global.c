@@ -13,6 +13,7 @@
 #include <GFraMe/gfmQuadtree.h>
 
 #include <jam/group_helper.h>
+#include <jam/minion.h>
 
 /** Store data related to game */
 gameCtx *pGame = 0;
@@ -77,6 +78,7 @@ gfmRV global_initUserVar() {
     ASSERT(rv == GFMRV_OK, rv);
     rv = gfmSprite_getNew(&(pGlobal->pPlayer));
     ASSERT(rv == GFMRV_OK, rv);
+
     /* TODO Initialize everything */
 
     rv = GFMRV_OK;
@@ -92,5 +94,6 @@ void global_freeUserVar() {
     gfmGroup_free(&(pGlobal->pHitbox));
     gfmSprite_free(&(pGlobal->pPlayer));
     gfmQuadtree_free(&(pGlobal->pQt));
+    gfmGenArr_clean(pGlobal->pMinion, minion_free);
 }
 
