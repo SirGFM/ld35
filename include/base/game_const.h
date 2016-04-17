@@ -100,8 +100,8 @@
 #define MINION_W            12
 #define MINION_H            8
 #define MINION_SSET         pGfx->pSset16x16
-#define MINION_OFFX         -12
-#define MINION_OFFY         -4
+#define MINION_OFFX         -4
+#define MINION_OFFY         -8
 #define MINION_MINTIME      0
 #define MINION_MAXTIME      20
 #define MINION_MODTIME      100

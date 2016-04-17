@@ -21,9 +21,9 @@ enum {
 
 static int minion_data[] = {
 /*              len|fps|loop|data ... */
-/*MINION_STAND*/ 1 , 0 , 0  , 64,
-/*MINION_ATK  */ 1 , 0 , 0  , 64,
-/*MINION_HURT */ 3 , 4 , 0  , 64,65,64
+/*MINION_STAND*/ 2 , 8 , 1  , 64,65,
+/*MINION_ATK  */ 1 , 0 , 0  , 66,
+/*MINION_HURT */ 5 , 8 , 0  , 67,68,69,70,71
 };
 static int minion_data_len = sizeof(minion_data) / sizeof(int);
 
