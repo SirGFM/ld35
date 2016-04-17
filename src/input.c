@@ -61,6 +61,13 @@ gfmRV input_updateButtons() {
             pGame->flags |= DBG_RENDERQT;
         }
     }
+    if ((pButton->gif.state & gfmInput_justReleased) == gfmInput_justReleased) {
+        if (gfm_didExportGif(pGame->pCtx) != GFMRV_FALSE) {
+            rv = gfm_recordGif(pGame->pCtx, 10000/*ms*/, "anim.gif", 8, 0);
+            ASSERT(rv == GFMRV_OK, rv);
+        }
+    }
+
     /* Update the 'manual stepper' */
     rv = input_updateDebugButtons();
     ASSERT(rv == GFMRV_OK, rv);
@@ -69,6 +76,7 @@ gfmRV input_updateButtons() {
     /* TODO Add actions that should be triggered as soon as key are pressed */
 
     /* Switch to/from pause state */
+#if 0
     if ((pButton->pause.state & gfmInput_justReleased) == gfmInput_justReleased) {
         if (pGame->curState != ST_PAUSE) {
             pGame->pushedState = pGame->curState;
@@ -78,6 +86,7 @@ gfmRV input_updateButtons() {
             pGame->curState = pGame->pushedState;
         }
     }
+#endif
 
     rv = GFMRV_OK;
 __ret:
@@ -144,6 +153,7 @@ gfmRV input_init() {
     ADD_KEY(qt);
     ADD_KEY(dbgPause);
     ADD_KEY(dbgStep);
+    ADD_KEY(gif);
 #endif
     ADD_KEY(left);
     ADD_KEY(right);
@@ -167,6 +177,7 @@ gfmRV input_init() {
     BIND_KEY(qt, gfmKey_f11);
     BIND_KEY(dbgPause, gfmKey_f5);
     BIND_KEY(dbgStep, gfmKey_f6);
+    BIND_KEY(gif, gfmKey_f10);
 #endif
 
     BIND_KEY(left, gfmKey_left);

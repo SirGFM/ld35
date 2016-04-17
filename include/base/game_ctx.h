@@ -155,6 +155,7 @@ struct stButtonCtx {
     button dbgPause;
     /** Update a single frame and pause */
     button dbgStep;
+    button gif;
 #endif
     button left;
     button right;
