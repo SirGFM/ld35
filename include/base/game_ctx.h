@@ -14,6 +14,7 @@
 #include <GFraMe/gfmInput.h>
 #include <GFraMe/gfmQuadtree.h>
 #include <GFraMe/gfmSpriteset.h>
+#include <GFraMe/gfmTilemap.h>
 #include <GFraMe/core/gfmAudio_bkend.h>
 
 /* == Types declaration ===================================================== */
@@ -200,6 +201,7 @@ struct stGlobalCtx {
     gfmSprite *pPlayer;
     gfmGroup *pFloor;
     gfmGroup *pHitbox;
+    gfmTilemap *pTilemap;
     gfmGenArr_var(minion, pMinion);
     int globalTimer;
     int globalCounter;

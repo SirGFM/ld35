@@ -118,5 +118,8 @@
 
 #define HITBOX_MAX_TIME     300
 
+#define INTRO_BGCOLOR       0xff5b6ee1
+#define INTRO_TILEMAP       "intro.gfm"
+
 #endif /* __GAME_CONST_H__ */
 

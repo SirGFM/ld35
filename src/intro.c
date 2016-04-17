@@ -12,10 +12,28 @@
 #include <jam/type.h>
 #include <jam/minion.h>
 
+static char *pDictNames[] = {
+    "floor"
+};
+static int pDictTypes[] = {
+    T_FLOOR
+};
+static int dictLen = sizeof(pDictTypes) / sizeof(int);
+
 gfmRV intro_init() {
     gfmSprite *pFloor;
     gfmRV rv;
     int x, y, w, h;
+
+    rv = gfm_setBackground(pGame->pCtx, INTRO_BGCOLOR);
+    ASSERT(rv == GFMRV_OK, rv);
+
+    rv = gfmTilemap_init(pGlobal->pTilemap, pGfx->pSset16x16, 20/*w*/, 15/*h*/,
+            -1/*defTile*/);
+    ASSERT(rv == GFMRV_OK, rv);
+    rv = gfmTilemap_loadf(pGlobal->pTilemap, pGame->pCtx, INTRO_TILEMAP,
+            sizeof(INTRO_TILEMAP), pDictNames, pDictTypes, dictLen);
+    ASSERT(rv == GFMRV_OK, rv);
 
     rv = prince_init();
     ASSERT(rv == GFMRV_OK, rv);
@@ -79,7 +97,7 @@ gfmRV intro_update() {
             V_HEIGHT+16, QT_MAX_DEPTH, QT_MAX_NODES);
     ASSERT(rv == GFMRV_OK, rv);
 
-    /* ---- update ---------------------------------------------------------- */
+    /* ---- spawn minions --------------------------------------------------- */
 
     if (pGlobal->globalTimer <= 0) {
         int x, rng, dir;
@@ -108,6 +126,11 @@ gfmRV intro_update() {
     else {
         pGlobal->globalTimer -= pGame->elapsed;
     }
+
+    /* ---- update ---------------------------------------------------------- */
+
+    rv = gfmTilemap_update(pGlobal->pTilemap, pGame->pCtx);
+    ASSERT(rv == GFMRV_OK, rv);
 
     rv = gfmGroup_update(pGlobal->pFloor, pGame->pCtx);
     ASSERT(rv == GFMRV_OK, rv);
@@ -145,6 +168,8 @@ __ret:
 gfmRV intro_draw() {
     gfmRV rv;
 
+    rv = gfmTilemap_draw(pGlobal->pTilemap, pGame->pCtx);
+    ASSERT(rv == GFMRV_OK, rv);
     rv = minion_drawAll();
     ASSERT(rv == GFMRV_OK, rv);
     rv = prince_draw();
