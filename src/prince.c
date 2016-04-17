@@ -25,7 +25,7 @@ static int prince_data[] = {
 /*PRINCE_STAND     */1 , 0 , 0  , 32,
 /*PRINCE_WALK      */4 , 8 , 1  , 33,32,34,32,
 /*PRINCE_SLASH     */3 , 12, 0  , 35,36,37,
-/*PRINCE_HURT      */1 , 0 , 0  , 32,
+/*PRINCE_HURT      */8 , 8 , 0  , 38,39,38,39,38,39,38,39,
 /*PRINCE_SHAPESHIFT*/1 , 0 , 0  , 32,
 };
 static int prince_data_len = sizeof(prince_data) / sizeof(int);
@@ -67,7 +67,17 @@ __ret:
 }
 
 gfmRV prince_hurt() {
-    return GFMRV_OK;
+    gfmRV rv;
+
+    if (pGlobal->playerAnim == PRINCE_HURT) {
+        return GFMRV_OK;
+    }
+
+    PLAY(PRINCE_HURT);
+
+    rv = GFMRV_OK;
+__ret:
+    return rv;
 }
 
 gfmRV prince_init() {
@@ -94,7 +104,8 @@ gfmRV prince_update() {
     gfmRV rv;
     double vx;
 
-    if (pGlobal->playerAnim == PRINCE_SLASH) {
+    if (pGlobal->playerAnim == PRINCE_SLASH ||
+            pGlobal->playerAnim == PRINCE_HURT) {
         vx = 0;
     }
     else if (pButton->left.state & gfmInput_pressed) {
@@ -113,7 +124,10 @@ gfmRV prince_update() {
     rv = gfmSprite_setHorizontalVelocity(pGlobal->pPlayer, vx);
     ASSERT(rv == GFMRV_OK, rv);
 
-    if ((pButton->act.state & gfmInput_justPressed) == gfmInput_justPressed) {
+    if (pGlobal->playerAnim == PRINCE_HURT) {
+        /* Block attacking when hurt */
+    }
+    else if ((pButton->act.state & gfmInput_justPressed) == gfmInput_justPressed) {
         if (pGlobal->playerAnim != PRINCE_SLASH) {
             rv = prince_spawn_slash();
             ASSERT(rv == GFMRV_OK, rv);
