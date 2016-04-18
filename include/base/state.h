@@ -11,6 +11,7 @@ enum enState {
     ST_NONE = 0,
     ST_BACKSTORY,
     ST_INTRO,
+    ST_OUTRO,
     ST_PAUSE,
     ST_MAX,
 };

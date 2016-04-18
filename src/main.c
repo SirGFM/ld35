@@ -12,6 +12,7 @@
 
 #include <jam/backstory.h>
 #include <jam/intro.h>
+#include <jam/outro.h>
 
 #include <GFraMe/gfmAssert.h>
 #include <GFraMe/gfmError.h>
@@ -38,6 +39,7 @@ gfmRV main_loop() {
             switch (pGame->nextState) {
                 case ST_BACKSTORY: rv = bs_init(); break;
                 case ST_INTRO: rv = intro_init(); break;
+                case ST_OUTRO: rv = ot_init(); break;
                 default: ASSERT(0, GFMRV_INTERNAL_ERROR);
             }
             ASSERT(rv == GFMRV_OK, rv);
@@ -92,6 +94,7 @@ gfmRV main_loop() {
             switch (pGame->curState) {
                 case ST_BACKSTORY: rv = bs_update(); break;
                 case ST_INTRO: rv = intro_update(); break;
+                case ST_OUTRO: rv = ot_update(); break;
                 default: ASSERT(0, GFMRV_INTERNAL_ERROR);
             }
             ASSERT(rv == GFMRV_OK, rv);
@@ -111,6 +114,7 @@ gfmRV main_loop() {
             switch (pGame->curState) {
                 case ST_BACKSTORY: rv = bs_draw(); break;
                 case ST_INTRO: rv = intro_draw(); break;
+                case ST_OUTRO: rv = ot_draw(); break;
                 default: ASSERT(0, GFMRV_INTERNAL_ERROR);
             }
             ASSERT(rv == GFMRV_OK, rv);

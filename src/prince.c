@@ -158,9 +158,13 @@ gfmRV prince_update() {
         ASSERT(rv == GFMRV_OK, rv);
     }
 
-    if (pGlobal->playerAnim == PRINCE_SLASH &&
-            gfmSprite_didAnimationFinish(pGlobal->pPlayer) == GFMRV_TRUE) {
-        pGlobal->playerAnim = -1;
+    if (gfmSprite_didAnimationFinish(pGlobal->pPlayer) == GFMRV_TRUE) {
+        if (pGlobal->playerAnim == PRINCE_SLASH) {
+            pGlobal->playerAnim = -1;
+        }
+        else if (pGlobal->playerAnim == PRINCE_HURT) {
+            pGame->nextState = ST_OUTRO;
+        }
     }
 
     rv = GFMRV_OK;

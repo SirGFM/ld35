@@ -14,6 +14,7 @@
           $(OBJDIR)/intro.o        \
           $(OBJDIR)/main.o         \
           $(OBJDIR)/minion.o       \
+          $(OBJDIR)/outro.o        \
           $(OBJDIR)/prince.o       \
           $(OBJDIR)/slash.o
 #=======================================================================
