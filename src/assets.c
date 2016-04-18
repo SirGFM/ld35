@@ -46,6 +46,7 @@ gfmRV assets_load() {
     LOAD_SFX(text, "sfx/text.wav");
     LOAD_SFX(song_menu, "mml/menu.mml");
     LOAD_SFX(song_bs, "mml/bs.mml");
+    LOAD_SFX(song_intro, "mml/intro.mml");
 
     rv = GFMRV_OK;
 __ret:

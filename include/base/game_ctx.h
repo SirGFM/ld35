@@ -142,7 +142,7 @@ struct stAudioCtx {
 
     int song_menu;
     int song_bs;
-    int song_game;
+    int song_intro;
     /* TODO Add any song/sfx here */
 };
 

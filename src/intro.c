@@ -85,6 +85,8 @@ gfmRV intro_init() {
     rv = gfmSprite_setFixed(pFloor);
     ASSERT(rv == GFMRV_OK, rv);
 
+    PLAY_SONG(song_intro, 0.6);
+
     pGlobal->globalTimer = 0;
     pGlobal->globalCounter = 0;
 
