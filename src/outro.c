@@ -34,7 +34,7 @@ gfmRV ot_update() {
 
     if (gfmText_didFinish(pGlobal->pText) == GFMRV_TRUE) {
         if ((pButton->act.state & gfmInput_justReleased) == gfmInput_justReleased) {
-            pGame->nextState = ST_BACKSTORY;
+            pGame->nextState = ST_MENU;
         }
     } /* if (gfmText_didFinish(pGlobal->pText) == GFMRV_TRUE) */
     else {

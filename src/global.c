@@ -100,6 +100,17 @@ gfmRV global_initUserVar() {
     rv = gfmText_forceFinish(pGlobal->pQuickText);
     ASSERT(rv == GFMRV_OK, rv);
 
+    rv = gfmText_getNew(&(pGlobal->pTitle));
+    ASSERT(rv == GFMRV_OK, rv);
+    rv = gfmText_init(pGlobal->pTitle, ((V_WIDTH) / 16 - 7) * 8, 64, V_WIDTH - 32, 1, TEXT_DELAY,
+            TEXT_BINDMODE, FPS_SSET, FPS_INIT);
+    ASSERT(rv == GFMRV_OK, rv);
+    rv = gfmText_getNew(&(pGlobal->pStart));
+    ASSERT(rv == GFMRV_OK, rv);
+    rv = gfmText_init(pGlobal->pStart, 64, 128, V_WIDTH - 32, 1, TEXT_DELAY,
+            TEXT_BINDMODE, FPS_SSET, FPS_INIT);
+    ASSERT(rv == GFMRV_OK, rv);
+
     /* TODO Initialize everything */
 
     rv = GFMRV_OK;
@@ -120,5 +131,7 @@ void global_freeUserVar() {
     gfmTilemap_free(&(pGlobal->pTilemap));
     gfmText_free(&(pGlobal->pText));
     gfmText_free(&(pGlobal->pQuickText));
+    gfmText_free(&(pGlobal->pTitle));
+    gfmText_free(&(pGlobal->pStart));
 }
 

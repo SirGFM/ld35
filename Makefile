@@ -13,6 +13,7 @@
           $(OBJDIR)/input.o        \
           $(OBJDIR)/intro.o        \
           $(OBJDIR)/main.o         \
+          $(OBJDIR)/menu.o         \
           $(OBJDIR)/minion.o       \
           $(OBJDIR)/outro.o        \
           $(OBJDIR)/prince.o       \

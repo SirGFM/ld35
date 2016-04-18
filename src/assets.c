@@ -34,6 +34,7 @@ gfmRV assets_load() {
     ASSERT(rv == GFMRV_OK, rv);
     GEN_SPRITESET(8, 8);
     GEN_SPRITESET(16, 16);
+    GEN_SPRITESET(32, 32);
     GEN_SPRITESET(64, 32);
 
     LOAD_SFX(minion_spawn, "sfx/minion_spawn.wav");

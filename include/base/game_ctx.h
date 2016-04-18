@@ -124,6 +124,7 @@ struct stGfxCtx {
     /** 8x8 spriteset of the main texture */
     gfmSpriteset *pSset8x8;
     gfmSpriteset *pSset16x16;
+    gfmSpriteset *pSset32x32;
     gfmSpriteset *pSset64x32;
     /** Handle of the main texture atlas */
     int texHandle;
@@ -220,6 +221,8 @@ struct stGlobalCtx {
     gfmTilemap *pTilemap;
     gfmText *pText;
     gfmText *pQuickText;
+    gfmText *pTitle;
+    gfmText *pStart;
     gfmAudioHandle *pCurSong;
     gfmGenArr_var(minion, pMinion);
     int globalTimer;
